@@ -9,5 +9,6 @@ export interface Block {
 
 export interface PageState {
   blocks: Block[];
+  slug: string;
   title: string;
 }

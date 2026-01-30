@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "docker compose up -d",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -11,6 +12,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "mongoose": "^9.1.5",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",

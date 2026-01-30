@@ -1,5 +1,6 @@
-'use client'
+"use client";
 import { cn } from "@/lib/utils";
+import { PageState } from "@/types/builder";
 
 interface ToolbarProps {
   title: string;
@@ -7,6 +8,7 @@ interface ToolbarProps {
   blockCount: number;
   onTitleChange: (title: string) => void;
   onTogglePreview: () => void;
+  state: PageState;
 }
 
 export function Toolbar({
@@ -15,6 +17,7 @@ export function Toolbar({
   blockCount,
   onTitleChange,
   onTogglePreview,
+  state,
 }: ToolbarProps) {
   return (
     <header className="sticky top-0 z-20 bg-toolbar border-b border-block-border shadow-toolbar backdrop-blur-sm">
@@ -42,8 +45,8 @@ export function Toolbar({
           className={cn(
             "flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors",
             isPreview
-              ? "bg-primary text-primary-foreground"
-              : "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+              ? "bg-indigo-700 text-primary-foreground"
+              : "bg-amber-700 text-secondary-foreground hover:bg-secondary/80",
           )}
         >
           {isPreview ? (
@@ -55,6 +58,28 @@ export function Toolbar({
               <span className="hidden sm:inline">Preview</span>
             </>
           )}
+        </button>
+        <button
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 transition-colors"
+          onClick={async () => {
+            const resp = await fetch("/api/pages", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                title: state.title,
+                slug: state.slug,
+                blocks: state.blocks,
+              }),
+            });
+            const data = (await resp.json()) as { success: boolean };
+            if (data.success) {
+              alert("Page published successfully!");
+            } else {
+              alert("Failed to publish the page.");
+            }
+          }}
+        >
+          Publish
         </button>
       </div>
     </header>
