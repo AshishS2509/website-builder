@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default function RegisterCard() {
@@ -9,10 +10,23 @@ export default function RegisterCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
-    console.log({ name, email, password });
-    // call register API here
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password, slug }),
+    });
+
+    if (!res.ok) {
+      console.error("Registration failed");
+    } else {
+      const data = await res.json();
+      alert(
+        "Registration successful! Please log in with slug: " + data.data.slug,
+      );
+      redirect(`/login`);
+    }
   };
 
   return (
@@ -53,7 +67,7 @@ export default function RegisterCard() {
 
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-200">
-              Slug
+              Website Name
             </label>
             <input
               type="text"
@@ -61,7 +75,7 @@ export default function RegisterCard() {
               value={slug}
               onChange={(e) => setSlug(e.target.value)}
               className="w-full rounded-md border px-3 py-2 text-sm outline-none"
-              placeholder="abc..."
+              placeholder="My Awesome Site"
             />
           </div>
 

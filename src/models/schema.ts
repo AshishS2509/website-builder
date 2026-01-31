@@ -1,6 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
-/* ---------- Types ---------- */
 export interface Block {
   id: string;
   type: "heading" | "text";
@@ -16,7 +15,6 @@ export interface PageDocument extends Document {
   updatedAt: Date;
 }
 
-/* ---------- Schemas ---------- */
 const BlockSchema = new Schema<Block>(
   {
     id: { type: String, required: true },
@@ -40,8 +38,55 @@ const PageSchema = new Schema<PageDocument>(
   { timestamps: true },
 );
 
-/* ---------- Model ---------- */
 const Page: Model<PageDocument> =
   mongoose.models.Page || mongoose.model<PageDocument>("Page", PageSchema);
 
 export default Page;
+
+export interface IUser extends Document {
+  slug: string;
+  email: string;
+  name: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const UserSchema = new Schema<IUser>(
+  {
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+      trim: true,
+    },
+
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+      lowercase: true,
+      trim: true,
+    },
+
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    password: {
+      type: String,
+      required: true,
+      select: false,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
+
+export const User: Model<IUser> =
+  mongoose.models.User || mongoose.model<IUser>("User", UserSchema);

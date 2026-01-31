@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Block } from "@/types/builder";
 import { BlockRenderer } from "./BlockRenderer";
 import { BlockMenu } from "./BlockMenu";
@@ -24,13 +24,10 @@ export function Canvas({
   onAddBlock,
 }: CanvasProps) {
   return (
-    <div
-      className="flex-1 overflow-auto bg-canvas canvas-grid"
-      onClick={() => onSelect(null)}
-    >
+    <div className="flex-1 overflow-auto" onClick={() => onSelect(null)}>
       <div className="max-w-3xl mx-auto py-12 px-6">
         <div
-          className="bg-block rounded-2xl border border-block-border shadow-block p-8 min-h-[60vh]"
+          className="bg-block rounded-2xl border border-block-border shadow-block p-8 min-h-[60vh] bg-gray-700"
           onClick={(e) => e.stopPropagation()}
         >
           {blocks.length === 0 ? (

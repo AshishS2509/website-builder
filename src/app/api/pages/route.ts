@@ -10,8 +10,6 @@ interface CreatePageBody {
 
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
-
     const body = (await req.json()) as CreatePageBody;
 
     if (!Array.isArray(body.blocks)) {

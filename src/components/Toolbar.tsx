@@ -20,12 +20,12 @@ export function Toolbar({
   state,
 }: ToolbarProps) {
   return (
-    <header className="sticky top-0 z-20 bg-toolbar border-b border-block-border shadow-toolbar backdrop-blur-sm">
+    <header className="sticky top-0 z-20 border-b border-block-border shadow-toolbar backdrop-blur-sm">
       <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              =
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+              <button className="font-bold text-2xl">=</button>
             </div>
             <input
               type="text"

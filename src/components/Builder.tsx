@@ -54,8 +54,6 @@ export function Builder({ config }: { config: PageState }) {
     setState((prev) => ({ ...prev, title }));
   }, []);
 
-  console.log(state);
-
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Toolbar

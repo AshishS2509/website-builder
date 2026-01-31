@@ -1,16 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
+
+const slug = process.env.SLUG;
 
 export default function LoginCard() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
-    console.log({ email, password });
-    // call login API here
+    const resp = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password, slug }),
+    });
+    if (!resp.ok) {
+      console.error("Login failed");
+      return;
+    }
+    redirect("/editor");
   };
 
   return (

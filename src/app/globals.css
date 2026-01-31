@@ -2,7 +2,11 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #f1f1f1;
+  --block-bg: hsl(var(--background));
+  --block-hover: hsl(var(--accent) / 0.08);
+  --block-border: hsl(var(--border));
+  --block-focus: hsl(var(--primary) / 0.25);
 }
 
 @theme inline {
@@ -14,7 +18,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #292929;
     --foreground: #ededed;
   }
 }

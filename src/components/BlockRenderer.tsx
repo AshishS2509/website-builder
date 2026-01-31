@@ -1,14 +1,14 @@
-'use client'
+"use client";
 import { Block } from "@/types/builder";
 import { cn } from "@/lib/utils";
 
 interface BlockRendererProps {
   block: Block;
-  isSelected: boolean;
+  isSelected?: boolean;
   isPreview: boolean;
-  onSelect: () => void;
-  onUpdate: (content: string) => void;
-  onDelete: () => void;
+  onSelect?: () => void;
+  onUpdate?: (content: string) => void;
+  onDelete?: () => void;
 }
 
 export function BlockRenderer({
@@ -26,8 +26,8 @@ export function BlockRenderer({
           <h2
             contentEditable={!isPreview}
             suppressContentEditableWarning
-            onBlur={(e) => onUpdate(e.currentTarget.textContent || "")}
-            className="text-3xl font-bold text-foreground outline-none focus:ring-2 focus:ring-primary/20 rounded px-1"
+            onBlur={(e) => onUpdate?.(e.currentTarget.textContent || "")}
+            className="text-3xl font-semibold tracking-tight text-foreground outline-none rounded-md px-1 focus-visible:ring-2 focus-visible:ring-primary/30"
           >
             {block.content}
           </h2>
@@ -37,8 +37,8 @@ export function BlockRenderer({
           <p
             contentEditable={!isPreview}
             suppressContentEditableWarning
-            onBlur={(e) => onUpdate(e.currentTarget.textContent || "")}
-            className="text-base text-muted-foreground leading-relaxed outline-none focus:ring-2 focus:ring-primary/20 rounded px-1"
+            onBlur={(e) => onUpdate?.(e.currentTarget.textContent || "")}
+            className="text-base leading-7 text-muted-foreground outline-none rounded-md px-1 focus-visible:ring-2 focus-visible:ring-primary/20"
           >
             {block.content}
           </p>
@@ -49,16 +49,18 @@ export function BlockRenderer({
             <img
               src={block.content}
               alt="Block image"
-              className="w-full max-w-2xl rounded-lg object-cover"
+              className="w-full rounded-xl object-cover border border-border shadow-sm"
             />
             {!isPreview && (
-              <input
-                type="text"
-                value={block.content}
-                onChange={(e) => onUpdate(e.target.value)}
-                placeholder="Image URL"
-                className="absolute bottom-2 left-2 right-2 px-3 py-1.5 text-sm bg-block/90 backdrop-blur border border-block-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
-              />
+              <div className=" absolute inset-x-2 bottom-2 opacity-0 group-hover:opacity-100 transition-all">
+                <input
+                  type="text"
+                  value={block.content}
+                  onChange={(e) => onUpdate?.(e.target.value)}
+                  placeholder="Image URL"
+                  className="absolute bottom-2 left-2 right-2 px-3 py-1.5 text-sm bg-block/90 backdrop-blur border border-block-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
+                />
+              </div>
             )}
           </div>
         );
@@ -67,14 +69,14 @@ export function BlockRenderer({
           <button
             contentEditable={!isPreview}
             suppressContentEditableWarning
-            onBlur={(e) => onUpdate(e.currentTarget.textContent || "")}
-            className="px-6 py-2.5 bg-primary text-primary-foreground font-medium rounded-lg hover:opacity-90 transition-opacity outline-none"
+            onBlur={(e) => onUpdate?.(e.currentTarget.textContent || "")}
+            className=" bg-blue-600 inline-flex items-center justify-center px-6 py-2.5 bg-primary text-primary-foreground font-medium text-sm rounded-lg shadow-sm hover:shadow-md hover:opacity-95 transition-all outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
           >
             {block.content}
           </button>
         );
       case "divider":
-        return <hr className="border-t border-border my-2" />;
+        return <hr className="my-4 border-t border-border/70" />;
       default:
         return null;
     }
@@ -86,16 +88,16 @@ export function BlockRenderer({
 
   return (
     <div
-      //   ref={setNodeRef}
-      //   style={style}
-      //   initial={{ opacity: 0, y: 10 }}
-      //   animate={{ opacity: 1, y: 0 }}
-      className={cn(
-        "group relative flex items-start gap-2 py-2 px-3 rounded-lg transition-all",
-        isSelected && "bg-block-hover ring-2 ring-primary/30",
-        !isSelected && "hover:bg-block-hover/50",
-      )}
       onClick={onSelect}
+      className={cn(
+        "group relative flex items-start gap-3",
+        "py-2 px-3 rounded-xl",
+        "transition-all duration-150",
+        "hover:-translate-y-px",
+        isSelected
+          ? "bg-accent/20 shadow-sm ring-1 ring-primary/30"
+          : "hover:bg-accent/10",
+      )}
     >
       {/* <div
         {...attributes}
@@ -110,9 +112,9 @@ export function BlockRenderer({
       <button
         onClick={(e) => {
           e.stopPropagation();
-          onDelete();
+          onDelete?.();
         }}
-        className="mt-1 p-1.5 opacity-0 group-hover:opacity-60 hover:opacity-100! hover:bg-destructive/10 hover:text-destructive rounded transition-all"
+        className="text-red-600 mt-1 p-1.5 rounded-md text-muted-foreground opacity-0 group-hover:opacity-60 hover:opacity-100 hover:bg-destructive/10 hover:text-destructive transition-all"
       >
         Delete
       </button>
