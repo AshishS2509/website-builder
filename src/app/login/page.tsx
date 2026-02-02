@@ -4,7 +4,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 
-const slug = process.env.SLUG;
+const slug = process.env.NEXT_PUBLIC_SLUG;
 
 export default function LoginCard() {
   const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ export default function LoginCard() {
 
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="w-full max-w-sm rounded-xl p-6 shadow-md">
+      <div className="w-full max-w-sm rounded-xl p-6 bg-neutral-900 shadow-md">
         <h1 className="mb-6 text-center text-2xl font-semibold">Sign in</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -62,7 +62,7 @@ export default function LoginCard() {
 
           <button
             type="submit"
-            className="w-full rounded-md py-2 text-sm font-medium text-white bg-gray-900"
+            className="w-full rounded-md py-2 text-sm font-medium text-white bg-indigo-400 cursor-pointer hover:bg-gray-700 transition-colors"
           >
             Login
           </button>

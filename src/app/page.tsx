@@ -1,10 +1,14 @@
 import { BlockRenderer } from "@/components/BlockRenderer";
 import { getServerConfig } from "@/lib/server-config";
+import Head from "next/head";
 
 export default async function Home() {
   const config = await getServerConfig();
   return (
     <div className="flex-1 overflow-auto">
+      <Head>
+        <title>{config.page.title}</title>
+      </Head>
       <div className="max-w-3xl mx-auto py-12 px-6">
         <div className="bg-block rounded-2xl border border-block-border shadow-block p-8 min-h-[60vh] bg-gray-700">
           <div className="space-y-1">

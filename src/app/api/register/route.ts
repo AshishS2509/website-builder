@@ -1,9 +1,7 @@
-import { connectDB } from "@/lib/mongodb";
 import Page, { IUser, User } from "@/models/schema";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  await connectDB();
   const { name, email, password, slug } = (await req.json()) as IUser;
   const formattedSlug = slug
     .replace(/^\s+|\s+$|\s+/g, "-")

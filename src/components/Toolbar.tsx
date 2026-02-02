@@ -19,6 +19,12 @@ export function Toolbar({
   onTogglePreview,
   state,
 }: ToolbarProps) {
+  const handleLogout = async () => {
+    await fetch("/api/logout", {
+      method: "POST",
+    });
+    window.location.href = "/";
+  };
   return (
     <header className="sticky top-0 z-20 border-b border-block-border shadow-toolbar backdrop-blur-sm">
       <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
@@ -80,6 +86,12 @@ export function Toolbar({
           }}
         >
           Publish
+        </button>
+        <button
+          onClick={handleLogout}
+          className="rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+        >
+          Logout
         </button>
       </div>
     </header>
