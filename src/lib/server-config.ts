@@ -1,14 +1,15 @@
 import { connectDB } from "@/lib/mongodb";
 import Page from "@/models/schema";
+import { redirect } from "next/navigation";
 
 const SLUG = process.env.SLUG as string;
 
-if (!SLUG) {
-  throw new Error("SLUG env variable is missing");
-}
-
 export async function getServerConfig() {
   await connectDB();
+
+  if (!SLUG) {
+    redirect("/register");
+  }
 
   const page = await Page.findOne({ slug: SLUG });
 
