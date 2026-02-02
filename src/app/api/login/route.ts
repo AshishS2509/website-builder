@@ -1,12 +1,13 @@
 import { User } from "../../../models/schema";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { connectDB } from "@/lib/mongodb";
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export async function POST(req: NextRequest) {
   try {
-
+    await connectDB();
     const { email, password, slug } = await req.json();
 
     if (!email || !password) {
@@ -17,7 +18,6 @@ export async function POST(req: NextRequest) {
     }
 
     const user = await User.findOne({ slug, email }).select("+password");
-    console.log("USER_LOGIN_ATTEMPT", { slug, email, user });
     if (!user) {
       return NextResponse.json(
         { message: "Invalid credentials" },

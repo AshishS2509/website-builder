@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Page, { Block } from "@/models/schema";
+import { connectDB } from "@/lib/mongodb";
 
 interface CreatePageBody {
   title?: string;
@@ -9,6 +10,7 @@ interface CreatePageBody {
 
 export async function POST(req: NextRequest) {
   try {
+    await connectDB();
     const body = (await req.json()) as CreatePageBody;
 
     if (!Array.isArray(body.blocks)) {
